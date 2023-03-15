@@ -1,0 +1,19 @@
+{
+  "server_config": {
+    "host": "localhost",
+    "port": "8080"
+  },
+  "cacher": {
+    "address": "Redis:6379",
+    "key_expiry": "1m"
+  },
+  "data_source": {
+    "dbDriver" : "mysql",
+    "dbUser" : "root",
+    "dbPass" : "pass",
+    "dbName" : "articleDb",
+    "tableName" : "articleTable",
+    "dbHost" : "DataBase",
+    "dbPort" : "3306"
+  }
+}
