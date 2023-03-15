@@ -5,7 +5,7 @@
   },
   "cacher": {
     "address": "Redis:6379",
-    "key_expiry": "30s"
+    "key_expiry": "10s"
   },
   "data_source": {
     "dbDriver" : "mysql",

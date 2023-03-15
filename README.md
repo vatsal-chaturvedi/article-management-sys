@@ -1,14 +1,17 @@
 [![Build & Test](https://github.com/vatsal-chaturvedi/article-management-sys/actions/workflows/build_test.yml/badge.svg)](https://github.com/vatsal-chaturvedi/article-management-sys/actions/workflows/build_test.yml) [![codecov](https://codecov.io/gh/vatsal-chaturvedi/article-management-sys/branch/main/graph/badge.svg?token=S4Q2G7L25O)](https://codecov.io/gh/vatsal-chaturvedi/article-management-sys)
-# Backend API for a Article Management System
-This is a RESTful HTTP API for a simple blog system built in Go. The API implements three endpoints for creating, retrieving, and listing articles. 
-The solution uses clean architecture and design patterns and is tested using unit and integration tests. The application can be run in Docker, and the repository contains a docker-compose.yml file and a start.sh bash script for setting up the relevant services and applications. 
-The solution uses a MySQL database, and the installation and initialization of the DB are done in start.sh.
-The get all article endpoint uses pagination and default limit is set to 20 so that the response time is fast and you can provide header query params for key `limit` and `page` as integers to change them.
-The get endpoints uses caching middleware for caching the response for 20 seconds.
+## Backend API for a Article Management System
+* This is a REST HTTP API for a article management system built using Go. 
+* It implements three endpoints for creating, retrieving, and listing articles. 
+### Features: 
+* Uses clean architecture and design patterns and is tested using unit and integration tests. The application can be run in Docker, and the repository contains a docker-compose.yml file and a start.sh bash script for setting up the relevant services and applications. 
+* Uses a MySQL database, and the installation and initialization of the DB are done when `start.sh` is executed.
+* Get all article endpoint uses pagination and default limit is set to 20 so that the response time is fast and you can provide header query params for key `limit` and `page` as integers to change them.
+* Get endpoints uses caching middleware for caching the response for 10 seconds.
 ## Running the Application
 * Run the following command to start the application:
 ```
 ./start.sh
 ```
-This will build and start the Docker containers for the application and the database.
-Once the containers are up and running, the API can be accessed at `http://localhost:8080.`
+* This will build and start the Docker containers for the application and the database.
+Once the containers are up and running, the API can be accessed at `http://localhost:8080`
+* You can test the api using postman, just import the [Postman Collection](./article-management-system.postman_collection.json) into your postman app.
