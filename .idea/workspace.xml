@@ -1,8 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2c5f6e4c-8553-40a4-9cad-c6ccb01e99b4" name="Changes" comment="Added middleware for caching the responses">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/init.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file://$USER_HOME$/go/go1.18.5" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2N2UPdWnF2Tf8vz4PqkPj6BnxKe" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/Program Files/work/article-management-sys/internal/middleware",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Program Files\work\article-management-sys\internal\middleware" />
+      <recent name="C:\Program Files\work\article-management-sys" />
+      <recent name="C:\Program Files\work\article-management-sys\cmd\blog" />
+      <recent name="C:\Program Files\work\article-management-sys\internal\router" />
+      <recent name="C:\Program Files\work\article-management-sys\internal\codes" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Program Files\work\article-management-sys" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware">
+    <configuration name="TestArticleManagementLogic_GetArticle in github.com/vatsal-chaturvedi/article-management-sys/internal/logic" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/logic" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestArticleManagementLogic_GetArticle\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/handler" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/handler" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/logic" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/middleware" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/middleware" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/router" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/router" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/router" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware" />
+        <item itemvalue="Go Test.TestArticleManagementLogic_GetArticle in github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/router" />
+        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="setup repo level functions of mysql and redis package for internal processing, initialized global structs in model directory, initial setup of service added in config.go, &#10;added test cases for above functions." />
+    <MESSAGE value="setup repo level functions of mysql and redis package for internal processing, initialized global structs in model directory, initial setup of service added in config.go, &#10;added test cases and mocks for above functions." />
+    <MESSAGE value="Added handler and logic layer for creating endpoints, Added methodNotAllowed and noRouteFound Endpoints for handling bad requests" />
+    <MESSAGE value="Added insert article endpoint and its test cases, along with setup of router" />
+    <MESSAGE value="Added  get article by id endpoint and its test cases" />
+    <MESSAGE value="Added  get all article endpoint and its test cases" />
+    <MESSAGE value="Added middleware for caching the responses" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added middleware for caching the responses" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_handler.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler Coverage Results" MODIFIED="1678866852616" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_middleware.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware Coverage Results" MODIFIED="1678872599130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_config.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/config Coverage Results" MODIFIED="1678863190085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_repo_datasource.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/repo/datasource Coverage Results" MODIFIED="1678863107989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_router.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/router Coverage Results" MODIFIED="1678867521465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_repo_cacher.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/repo/cacher Coverage Results" MODIFIED="1678863081911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_logic.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic Coverage Results" MODIFIED="1678867074876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
