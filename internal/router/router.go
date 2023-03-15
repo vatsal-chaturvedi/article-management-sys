@@ -22,6 +22,7 @@ func Register(svcCfg *config.SvcConfig) *mux.Router {
 	router1.HandleFunc("/articles", svc.InsertArticle).Methods(http.MethodPost)
 
 	router2 := m.PathPrefix("").Subrouter()
-	router2.HandleFunc("/articles", svc.GetArticleById).Methods(http.MethodGet)
+	router2.HandleFunc("/articles/{id}", svc.GetArticleById).Methods(http.MethodGet)
+	router2.HandleFunc("/articles", svc.GetAllArticle).Methods(http.MethodGet)
 	return m
 }

@@ -14,6 +14,7 @@ import (
 type ArticleManagementLogicI interface {
 	InsertArticle(req *model.Article) *model.Response
 	GetArticle(id string) *model.Response
+	GetAllArticle(limit int, page int) *model.Response
 }
 
 type ArticleManagementLogic struct {
@@ -71,5 +72,23 @@ func (l ArticleManagementLogic) GetArticle(id string) *model.Response {
 		Status:  http.StatusOK,
 		Message: "Success",
 		Data:    article,
+	}
+}
+
+func (l ArticleManagementLogic) GetAllArticle(limit int, page int) *model.Response {
+	offset := (page - 1) * limit
+	articles, _, err := l.DsSvc.Get(map[string]interface{}{}, limit, offset)
+	if err != nil {
+		log.Print(codes.GetErr(codes.ErrDataSource), err)
+		return &model.Response{
+			Status:  http.StatusInternalServerError,
+			Message: codes.GetErr(codes.ErrDataSource),
+			Data:    nil,
+		}
+	}
+	return &model.Response{
+		Status:  http.StatusOK,
+		Message: "Success",
+		Data:    articles,
 	}
 }

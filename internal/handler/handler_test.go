@@ -380,3 +380,73 @@ func Test_blog_GetArticleById(t *testing.T) {
 		})
 	}
 }
+
+func Test_blog_GetAllArticle(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	tests := []struct {
+		name  string
+		setup func() (ArticleManagementHandlerI, *http.Request)
+		want  func(httptest.ResponseRecorder)
+	}{
+		{
+			name: "Success",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				mockLogic.EXPECT().GetAllArticle(10, 1).
+					Return(&model.Response{
+						Status:  http.StatusOK,
+						Message: "Success",
+						Data:    []model.ArticleDs{{Id: "1", Title: "title", Author: "author", Content: "content"}},
+					}).Times(1)
+
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				r, _ := http.NewRequest("GET", "/articles", nil)
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusOK,
+					Message: "Success",
+					Data:    []map[string]interface{}{{"author": "author", "content": "content", "id": "1", "title": "title"}},
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusOK) {
+					t.Errorf("Want: %v, Got: %v", http.StatusOK, recorder.Code)
+					return
+				}
+				if !reflect.DeepEqual(response.Status, tempResp.Status) {
+					t.Errorf("Want: %v, Got: %v", tempResp.Status, response.Status)
+					return
+				}
+				if !reflect.DeepEqual(response.Message, tempResp.Message) {
+					t.Errorf("Want: %v, Got: %v", tempResp.Message, response.Message)
+					return
+				}
+				marshal, _ := json.Marshal(&response.Data)
+				marshalExpected, _ := json.Marshal(&tempResp.Data)
+				if !reflect.DeepEqual(marshal, marshalExpected) {
+					t.Errorf("Want: %v, Got: %v", marshalExpected, marshal)
+					return
+				}
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			x, r := tt.setup()
+			x.GetAllArticle(w, r)
+			tt.want(*w)
+		})
+	}
+}

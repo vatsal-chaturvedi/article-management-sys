@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/go-playground/validator"
 	"github.com/gorilla/mux"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/codes"
@@ -11,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 //go:generate mockgen --build_flags=--mod=mod --destination=./../../pkg/mock/mock_handler.go --package=mock github.com/vatsal-chaturvedi/article-management-sys/internal/handler ArticleManagementHandlerI
@@ -20,6 +22,7 @@ type ArticleManagementHandlerI interface {
 	RouteNotFound(http.ResponseWriter, *http.Request)
 	InsertArticle(http.ResponseWriter, *http.Request)
 	GetArticleById(w http.ResponseWriter, r *http.Request)
+	GetAllArticle(w http.ResponseWriter, r *http.Request)
 }
 
 type articleManagement struct {
@@ -115,6 +118,28 @@ func (svc articleManagement) GetArticleById(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	resp := svc.logic.GetArticle(id)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(resp.Status)
+	_ = json.NewEncoder(w).Encode(&model.Response{
+		Status:  resp.Status,
+		Message: resp.Message,
+		Data:    resp.Data,
+	})
+}
+
+func (svc articleManagement) GetAllArticle(w http.ResponseWriter, r *http.Request) {
+	queryParams := r.URL.Query()
+	limit, err := strconv.Atoi(queryParams.Get("limit"))
+	if err != nil || limit == 0 {
+		log.Print(fmt.Sprintf("setting default limit as %d as error: %+v, query: %s", 100, err, queryParams.Get("limit")))
+		limit = 10
+	}
+	page, err := strconv.Atoi(queryParams.Get("page"))
+	if err != nil || page == 1 {
+		log.Print(fmt.Sprintf("setting default page as %d as error: %+v, query: %s", 1, err, queryParams.Get("page")))
+		page = 1
+	}
+	resp := svc.logic.GetAllArticle(limit, page)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(resp.Status)
 	_ = json.NewEncoder(w).Encode(&model.Response{

@@ -34,6 +34,18 @@ func (m *MockArticleManagementHandlerI) EXPECT() *MockArticleManagementHandlerIM
 	return m.recorder
 }
 
+// GetAllArticle mocks base method.
+func (m *MockArticleManagementHandlerI) GetAllArticle(arg0 http.ResponseWriter, arg1 *http.Request) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "GetAllArticle", arg0, arg1)
+}
+
+// GetAllArticle indicates an expected call of GetAllArticle.
+func (mr *MockArticleManagementHandlerIMockRecorder) GetAllArticle(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllArticle", reflect.TypeOf((*MockArticleManagementHandlerI)(nil).GetAllArticle), arg0, arg1)
+}
+
 // GetArticleById mocks base method.
 func (m *MockArticleManagementHandlerI) GetArticleById(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
