@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"github.com/go-playground/validator"
+	"github.com/gorilla/mux"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/codes"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/logic"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/model"
@@ -18,6 +19,7 @@ type ArticleManagementHandlerI interface {
 	MethodNotAllowed(http.ResponseWriter, *http.Request)
 	RouteNotFound(http.ResponseWriter, *http.Request)
 	InsertArticle(http.ResponseWriter, *http.Request)
+	GetArticleById(w http.ResponseWriter, r *http.Request)
 }
 
 type articleManagement struct {
@@ -90,6 +92,29 @@ func (svc articleManagement) InsertArticle(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	resp := svc.logic.InsertArticle(&article)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(resp.Status)
+	_ = json.NewEncoder(w).Encode(&model.Response{
+		Status:  resp.Status,
+		Message: resp.Message,
+		Data:    resp.Data,
+	})
+}
+
+func (svc articleManagement) GetArticleById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, ok := vars["id"]
+	if !ok {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(&model.Response{
+			Status:  http.StatusBadRequest,
+			Message: codes.GetErr(codes.ErrAssertid),
+			Data:    nil,
+		})
+		return
+	}
+	resp := svc.logic.GetArticle(id)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(resp.Status)
 	_ = json.NewEncoder(w).Encode(&model.Response{

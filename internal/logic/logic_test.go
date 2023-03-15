@@ -100,3 +100,76 @@ func TestArticleManagementLogic_InsertArticle(t *testing.T) {
 		})
 	}
 }
+
+func TestArticleManagementLogic_GetArticle(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	tests := []struct {
+		name  string
+		setup func() datasource.DataSourceI
+		give  *model.Article
+		want  *model.Response
+	}{
+		{
+			name: "Success",
+			setup: func() datasource.DataSourceI {
+				mockDs := mock.NewMockDataSourceI(mockCtrl)
+				x := model.ArticleDs{
+					Id:      "1",
+					Title:   "title",
+					Content: "content",
+					Author:  "author",
+				}
+				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return([]model.ArticleDs{x}, 1, nil)
+				return mockDs
+			},
+			want: &model.Response{
+				Status:  http.StatusOK,
+				Message: "Success",
+				Data: []model.ArticleDs{{
+					Id:      "1",
+					Title:   "title",
+					Content: "content",
+					Author:  "author",
+				}},
+			},
+		},
+		{
+			name: "Failure:: No article found",
+			setup: func() datasource.DataSourceI {
+				mockDs := mock.NewMockDataSourceI(mockCtrl)
+				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return([]model.ArticleDs{}, 1, nil)
+				return mockDs
+			},
+			want: &model.Response{
+				Status:  http.StatusBadRequest,
+				Message: codes.GetErr(codes.ErrArticleNotFound),
+				Data:    nil,
+			},
+		},
+		{
+			name: "Failure:: Datasource Error",
+			setup: func() datasource.DataSourceI {
+				mockDs := mock.NewMockDataSourceI(mockCtrl)
+				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return(nil, 0, errors.New(""))
+				return mockDs
+			},
+			want: &model.Response{
+				Status:  http.StatusInternalServerError,
+				Message: codes.GetErr(codes.ErrDataSource),
+				Data:    nil,
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rec := NewArticleManagementLogicI(tt.setup())
+			got := rec.GetArticle("1")
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Logf("Want: %v, Got: %v", tt.want, got)
+				t.Fail()
+			}
+		})
+	}
+}

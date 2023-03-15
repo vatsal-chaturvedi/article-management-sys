@@ -13,6 +13,7 @@ import (
 
 type ArticleManagementLogicI interface {
 	InsertArticle(req *model.Article) *model.Response
+	GetArticle(id string) *model.Response
 }
 
 type ArticleManagementLogic struct {
@@ -45,5 +46,30 @@ func (l ArticleManagementLogic) InsertArticle(req *model.Article) *model.Respons
 		Status:  http.StatusCreated,
 		Message: "Success",
 		Data:    map[string]string{"id": article.Id},
+	}
+}
+
+func (l ArticleManagementLogic) GetArticle(id string) *model.Response {
+	article, _, err := l.DsSvc.Get(map[string]interface{}{"id": id}, 1, 0)
+	if err != nil {
+		log.Print(codes.GetErr(codes.ErrDataSource), err)
+		return &model.Response{
+			Status:  http.StatusInternalServerError,
+			Message: codes.GetErr(codes.ErrDataSource),
+			Data:    nil,
+		}
+	}
+	if len(article) == 0 {
+		log.Print(codes.GetErr(codes.ErrArticleNotFound))
+		return &model.Response{
+			Status:  http.StatusBadRequest,
+			Message: codes.GetErr(codes.ErrArticleNotFound),
+			Data:    nil,
+		}
+	}
+	return &model.Response{
+		Status:  http.StatusOK,
+		Message: "Success",
+		Data:    article,
 	}
 }

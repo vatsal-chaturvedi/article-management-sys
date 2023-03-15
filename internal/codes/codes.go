@@ -11,13 +11,15 @@ const (
 	ErrReadingReqBody
 	ErrUnmarshall
 	ErrDataSource
+	ErrArticleNotFound
 )
 
 var errCodes = map[errCode]string{
-	ErrAssertid:       "Unable to assert article id",
-	ErrReadingReqBody: "Unable to read request body",
-	ErrUnmarshall:     "Unable to unmarshal request body",
-	ErrDataSource:     "DataSource error",
+	ErrAssertid:        "Unable to assert article id",
+	ErrReadingReqBody:  "Unable to read request body",
+	ErrUnmarshall:      "Unable to unmarshal request body",
+	ErrDataSource:      "DataSource error",
+	ErrArticleNotFound: "No article found for specified id",
 }
 
 func GetErr(code errCode) string {

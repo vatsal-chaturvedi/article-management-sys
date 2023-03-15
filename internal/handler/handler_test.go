@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/golang/mock/gomock"
+	"github.com/gorilla/mux"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/codes"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/model"
 	"github.com/vatsal-chaturvedi/article-management-sys/pkg/mock"
@@ -285,6 +286,96 @@ func Test_ArticleManagement_InsertArticle(t *testing.T) {
 			w := httptest.NewRecorder()
 			x, r := tt.setup()
 			x.InsertArticle(w, r)
+			tt.want(*w)
+		})
+	}
+}
+
+func Test_blog_GetArticleById(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	tests := []struct {
+		name  string
+		setup func() (ArticleManagementHandlerI, *http.Request)
+		want  func(httptest.ResponseRecorder)
+	}{
+		{
+			name: "Success",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				mockLogic.EXPECT().GetArticle("1").
+					Return(&model.Response{
+						Status:  http.StatusOK,
+						Message: "Success",
+						Data:    map[string]string{"id": "1"},
+					}).Times(1)
+
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				r, _ := http.NewRequest("GET", "/articles/:1", nil)
+				r = mux.SetURLVars(r, map[string]string{"id": "1"})
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusOK,
+					Message: "Success",
+					Data:    map[string]interface{}{"id": "1"},
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusOK) {
+					t.Errorf("Want: %v, Got: %v", http.StatusOK, recorder.Code)
+				}
+				if !reflect.DeepEqual(&response, tempResp) {
+					t.Errorf("Want: %v, Got: %v", tempResp, &response)
+				}
+			},
+		},
+		{
+			name: "Failure::invalid id",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				r, _ := http.NewRequest("GET", "/articles/:1", nil)
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusBadRequest,
+					Message: codes.GetErr(codes.ErrAssertid),
+					Data:    nil,
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusBadRequest) {
+					t.Errorf("Want: %v, Got: %v", http.StatusBadRequest, recorder.Code)
+				}
+				if !reflect.DeepEqual(&response, tempResp) {
+					t.Errorf("Want: %v, Got: %v", tempResp, &response)
+				}
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			x, r := tt.setup()
+			x.GetArticleById(w, r)
 			tt.want(*w)
 		})
 	}

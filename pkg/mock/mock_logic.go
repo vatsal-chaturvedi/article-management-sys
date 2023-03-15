@@ -34,6 +34,20 @@ func (m *MockArticleManagementLogicI) EXPECT() *MockArticleManagementLogicIMockR
 	return m.recorder
 }
 
+// GetArticle mocks base method.
+func (m *MockArticleManagementLogicI) GetArticle(arg0 string) *model.Response {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetArticle", arg0)
+	ret0, _ := ret[0].(*model.Response)
+	return ret0
+}
+
+// GetArticle indicates an expected call of GetArticle.
+func (mr *MockArticleManagementLogicIMockRecorder) GetArticle(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetArticle", reflect.TypeOf((*MockArticleManagementLogicI)(nil).GetArticle), arg0)
+}
+
 // InsertArticle mocks base method.
 func (m *MockArticleManagementLogicI) InsertArticle(arg0 *model.Article) *model.Response {
 	m.ctrl.T.Helper()
