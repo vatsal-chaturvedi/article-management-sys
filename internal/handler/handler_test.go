@@ -1,8 +1,14 @@
 package handler
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
+	"github.com/golang/mock/gomock"
+	"github.com/vatsal-chaturvedi/article-management-sys/internal/codes"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/model"
+	"github.com/vatsal-chaturvedi/article-management-sys/pkg/mock"
+	"io/ioutil"
 
 	"net/http"
 	"net/http/httptest"
@@ -10,7 +16,12 @@ import (
 	"testing"
 )
 
-func Test_common_MethodNotAllowed(t *testing.T) {
+type Reader string
+
+func (Reader) Read(p []byte) (n int, err error) {
+	return 0, errors.New("test error")
+}
+func Test_ArticleManagement_MethodNotAllowed(t *testing.T) {
 	tests := []struct {
 		name     string
 		setup    func() ArticleManagementHandlerI
@@ -61,7 +72,7 @@ func Test_common_MethodNotAllowed(t *testing.T) {
 	}
 }
 
-func Test_common_RouteNotFound(t *testing.T) {
+func Test_ArticleManagement_RouteNotFound(t *testing.T) {
 	tests := []struct {
 		name     string
 		setup    func() ArticleManagementHandlerI
@@ -106,6 +117,175 @@ func Test_common_RouteNotFound(t *testing.T) {
 			w := httptest.NewRecorder()
 			handler.RouteNotFound(w, nil)
 			tt.validate(w)
+		})
+	}
+}
+
+func Test_ArticleManagement_InsertArticle(t *testing.T) {
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	tests := []struct {
+		name  string
+		setup func() (ArticleManagementHandlerI, *http.Request)
+		want  func(httptest.ResponseRecorder)
+	}{
+		{
+			name: "Success",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				article := model.Article{
+					Title:   "title",
+					Author:  "author",
+					Content: "content",
+				}
+				mockLogic.EXPECT().InsertArticle(&article).
+					Return(&model.Response{
+						Status:  http.StatusCreated,
+						Message: "Success",
+						Data:    map[string]string{"id": "1"},
+					}).Times(1)
+
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				by, err := json.Marshal(article)
+				if err != nil {
+					return nil, nil
+				}
+				r, _ := http.NewRequest("POST", "/articles", bytes.NewBuffer(by))
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusCreated,
+					Message: "Success",
+					Data:    map[string]interface{}{"id": "1"},
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusCreated) {
+					t.Errorf("Want: %v, Got: %v", http.StatusCreated, recorder.Code)
+				}
+				if !reflect.DeepEqual(&response, tempResp) {
+					t.Errorf("Want: %v, Got: %v", tempResp, &response)
+				}
+			},
+		},
+		{
+			name: "Failure:: Validate error",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				article := model.Article{
+					Author:  "author",
+					Content: "content",
+				}
+
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				by, err := json.Marshal(article)
+				if err != nil {
+					return nil, nil
+				}
+				r, _ := http.NewRequest("POST", "/articles", bytes.NewBuffer(by))
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusBadRequest,
+					Message: "Key: 'Article.Title' Error:Field validation for 'Title' failed on the 'required' tag",
+					Data:    nil,
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusBadRequest) {
+					t.Errorf("Want: %v, Got: %v", http.StatusBadRequest, recorder.Code)
+				}
+				if !reflect.DeepEqual(&response, tempResp) {
+					t.Errorf("Want: %v, Got: %v", tempResp, &response)
+				}
+			},
+		},
+		{
+			name: "Failure::readAll error",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				r, _ := http.NewRequest("POST", "/articles", Reader(""))
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusInternalServerError,
+					Message: codes.GetErr(codes.ErrReadingReqBody),
+					Data:    nil,
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusInternalServerError) {
+					t.Errorf("Want: %v, Got: %v", http.StatusInternalServerError, recorder.Code)
+				}
+				if !reflect.DeepEqual(&response, tempResp) {
+					t.Errorf("Want: %v, Got: %v", tempResp, &response)
+				}
+			},
+		},
+		{
+			name: "Failure::json unmarshall error",
+			setup: func() (ArticleManagementHandlerI, *http.Request) {
+				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
+				rec := &articleManagement{
+					logic: mockLogic,
+				}
+				r, _ := http.NewRequest("POST", "/articles", bytes.NewBuffer([]byte("")))
+				return rec, r
+			},
+			want: func(recorder httptest.ResponseRecorder) {
+				b, err := ioutil.ReadAll(recorder.Body)
+				if err != nil {
+					t.Log(err)
+					t.Fail()
+				}
+				var response model.Response
+				err = json.Unmarshal(b, &response)
+				tempResp := &model.Response{
+					Status:  http.StatusInternalServerError,
+					Message: codes.GetErr(codes.ErrUnmarshall),
+					Data:    nil,
+				}
+				if !reflect.DeepEqual(recorder.Code, http.StatusInternalServerError) {
+					t.Errorf("Want: %v, Got: %v", http.StatusInternalServerError, recorder.Code)
+				}
+				if !reflect.DeepEqual(&response, tempResp) {
+					t.Errorf("Want: %v, Got: %v", tempResp, &response)
+				}
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			x, r := tt.setup()
+			x.InsertArticle(w, r)
+			tt.want(*w)
 		})
 	}
 }
