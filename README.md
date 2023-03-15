@@ -3,7 +3,8 @@
 This is a RESTful HTTP API for a simple blog system built in Go. The API implements three endpoints for creating, retrieving, and listing articles. 
 The solution uses clean architecture and design patterns and is tested using unit and integration tests. The application can be run in Docker, and the repository contains a docker-compose.yml file and a start.sh bash script for setting up the relevant services and applications. 
 The solution uses a MySQL database, and the installation and initialization of the DB are done in start.sh.
-
+The get all article endpoint uses pagination and default limit is set to 20 so that the response time is fast and you can provide header query params for key `limit` and `page` as integers to change them.
+The get endpoints uses caching middleware for caching the response for 20 seconds.
 ## Running the Application
 * Run the following command to start the application:
 ```
