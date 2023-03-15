@@ -1,6 +1,3 @@
-module github.com/vatsal-chaturvedi/article-management-sys
-
-
-re
+module article-management-sys
 
 go 1.18
