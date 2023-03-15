@@ -11,7 +11,6 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
-	github.com/vatsal278/blog v0.0.0-20230314064705-f67e77252fc2
 )
 
 require (
