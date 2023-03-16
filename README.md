@@ -14,7 +14,7 @@ sh start.sh
 ```
 * This will build and start the Docker containers for the application and the database.
 Once the containers are up and running, the API can be accessed at `http://localhost:8080`
-* You can test the api using postman, just import the [Postman Collection](./article-management-system.postman_collection.json) into your postman app.
+* You can test the api using postman, just import the [Postman Collection](docs/article-management-system.postman_collection.json) into your postman app.
 
 ## Testing the Application
 * GitHub actions have been used with codecov to generate the project code coverage as a badge with over 80% lines of code covered by unit tests.
