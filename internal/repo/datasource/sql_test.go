@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/DATA-DOG/go-sqlmock"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/vatsal-chaturvedi/article-management-sys/internal/config"
 	"github.com/vatsal-chaturvedi/article-management-sys/internal/model"
 	"reflect"
 	"regexp"
@@ -12,46 +11,12 @@ import (
 	"testing"
 )
 
-func TestSqlDs_HealthCheck(t *testing.T) {
-	db, _, err := sqlmock.New()
-	if err != nil {
-		t.Fail()
-	}
-	svcConfig := config.SvcConfig{
-		DbSvc: config.DbSvc{Db: db},
-	}
-	dB := NewSql(svcConfig.DbSvc, "newTemp")
-
-	tests := []struct {
-		name      string
-		validator func(bool)
-	}{
-		{
-			name: "SUCCESS::Health check",
-			validator: func(res bool) {
-				if res != true {
-					t.Errorf("Want: %v, Got: %v", true, res)
-				}
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-
-			res := dB.HealthCheck()
-
-			if tt.validator != nil {
-				tt.validator(res)
-			}
-		})
-	}
-}
 func TestSqlDs_Get(t *testing.T) {
 	tests := []struct {
 		name      string
 		setupFunc func() (sqlDs, sqlmock.Sqlmock)
 		filter    map[string]interface{}
-		validator func([]model.ArticleDs, int, error, sqlmock.Sqlmock)
+		validator func([]model.ArticleDs, error, sqlmock.Sqlmock)
 	}{
 		{
 			name: "SUCCESS::Get",
@@ -67,11 +32,10 @@ func TestSqlDs_Get(t *testing.T) {
 					sqlSvc: db,
 					table:  "newTemp",
 				}
-				mock.ExpectQuery(regexp.QuoteMeta("SELECT COUNT(`id`) FROM newTemp WHERE id = '1234'")).WillReturnError(nil).WillReturnRows(sqlmock.NewRows([]string{"count(id)"}).AddRow("1"))
 				mock.ExpectQuery("SELECT id, title, author, content FROM newTemp WHERE id = '1234' ORDER BY title LIMIT 1 OFFSET 2 ").WillReturnRows(sqlmock.NewRows([]string{"id", "title", "author", "content"}).AddRow("1", "TITLE", "AUTHOR", "CONTENT"))
 				return dB, mock
 			},
-			validator: func(rows []model.ArticleDs, count int, err error, mock sqlmock.Sqlmock) {
+			validator: func(rows []model.ArticleDs, err error, mock sqlmock.Sqlmock) {
 				temp := []model.ArticleDs{{
 					Id:      "1",
 					Title:   "TITLE",
@@ -84,10 +48,6 @@ func TestSqlDs_Get(t *testing.T) {
 				}
 				if err != nil {
 					t.Errorf("Want: %v, Got: %v", nil, err)
-					return
-				}
-				if count != 1 {
-					t.Errorf("Want: %v, Got: %v", 3, count)
 					return
 				}
 				if !reflect.DeepEqual(rows, temp) {
@@ -108,64 +68,16 @@ func TestSqlDs_Get(t *testing.T) {
 					sqlSvc: db,
 					table:  "newTemp",
 				}
-				mock.ExpectQuery(regexp.QuoteMeta("SELECT COUNT(`id`) FROM newTemp WHERE userid = '1234'")).WillReturnError(nil).WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow("1").AddRow("2").AddRow("3"))
 				mock.ExpectQuery("SELECT id, title, author, content FROM newTemp WHERE userid = '1234' ORDER BY title LIMIT 1 OFFSET 2 ;").WillReturnError(errors.New("Unknown column"))
 				return dB, mock
 			},
-			validator: func(rows []model.ArticleDs, count int, err error, mock sqlmock.Sqlmock) {
+			validator: func(rows []model.ArticleDs, err error, mock sqlmock.Sqlmock) {
 				if mock.ExpectationsWereMet() != nil {
 					t.Errorf("Want: %v, Got: %v", nil, mock.ExpectationsWereMet())
 					return
 				}
 				if !strings.Contains(err.Error(), "Unknown column") {
 					t.Errorf("Want: %v, Got: %v", "Unknown column", err)
-				}
-			},
-		},
-		{
-			name:   "FAILURE::Get:: get count query error",
-			filter: map[string]interface{}{"id": "1234"},
-			setupFunc: func() (sqlDs, sqlmock.Sqlmock) {
-				db, mock, err := sqlmock.New()
-				if err != nil {
-					t.Fail()
-				}
-				dB := sqlDs{
-					sqlSvc: db,
-					table:  "newTemp",
-				}
-				mock.ExpectQuery(regexp.QuoteMeta("SELECT COUNT(`id`) FROM newTemp WHERE id = '1234'")).WillReturnError(errors.New("query error")).WillReturnRows(sqlmock.NewRows([]string{"transaction_id"}).AddRow("1").AddRow("2").AddRow("3"))
-				return dB, mock
-			},
-			validator: func(rows []model.ArticleDs, count int, err error, mock sqlmock.Sqlmock) {
-				if !strings.Contains(err.Error(), "query error") {
-					t.Errorf("Want: %v, Got: %v", "query error", err)
-				}
-
-			},
-		},
-		{
-			name:   "FAILURE::Get:: get count scan error",
-			filter: map[string]interface{}{"id": "1234"},
-			setupFunc: func() (sqlDs, sqlmock.Sqlmock) {
-				db, mock, err := sqlmock.New()
-				if err != nil {
-					t.Fail()
-				}
-				dB := sqlDs{
-					sqlSvc: db,
-					table:  "newTemp",
-				}
-				mock.ExpectQuery(regexp.QuoteMeta("SELECT COUNT(`id`) FROM newTemp WHERE id = '1234'")).WillReturnError(nil).WillReturnRows(sqlmock.NewRows([]string{"count(id)"}).AddRow(true))
-				return dB, mock
-			},
-			validator: func(rows []model.ArticleDs, count int, err error, mock sqlmock.Sqlmock) {
-				if mock.ExpectationsWereMet() != nil {
-					t.Errorf("Want: %v, Got: %v", nil, mock.ExpectationsWereMet())
-					return
-				}
-				if !strings.Contains(err.Error(), "sql: Scan error") {
-					t.Errorf("Want: %v, Got: %v", "sql: Scan error", err)
 				}
 			},
 		},
@@ -177,11 +89,11 @@ func TestSqlDs_Get(t *testing.T) {
 			// STEP 1: seting up all instances for the specific test case
 			db, mock := tt.setupFunc()
 			// STEP 2: call the test function
-			rows, count, err := db.Get(tt.filter, 1, 2)
+			rows, err := db.Get(tt.filter, 1, 2)
 
 			// STEP 3: validation of output
 			if tt.validator != nil {
-				tt.validator(rows, count, err, mock)
+				tt.validator(rows, err, mock)
 			}
 		})
 	}

@@ -89,7 +89,7 @@ func TestMiddleware_Cacher(t *testing.T) {
 					return
 				}
 				expected := &model.Response{
-					Status:  http.StatusBadRequest,
+					Status:  http.StatusInternalServerError,
 					Message: codes.GetErr(codes.ErrUnmarshall),
 					Data:    nil,
 				}

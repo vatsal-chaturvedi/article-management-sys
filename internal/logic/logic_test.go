@@ -121,7 +121,7 @@ func TestArticleManagementLogic_GetArticle(t *testing.T) {
 					Content: "content",
 					Author:  "author",
 				}
-				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return([]model.ArticleDs{x}, 1, nil)
+				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return([]model.ArticleDs{x}, nil)
 				return mockDs
 			},
 			want: &model.Response{
@@ -139,7 +139,7 @@ func TestArticleManagementLogic_GetArticle(t *testing.T) {
 			name: "Failure:: No article found",
 			setup: func() datasource.DataSourceI {
 				mockDs := mock.NewMockDataSourceI(mockCtrl)
-				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return([]model.ArticleDs{}, 1, nil)
+				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return([]model.ArticleDs{}, nil)
 				return mockDs
 			},
 			want: &model.Response{
@@ -152,7 +152,7 @@ func TestArticleManagementLogic_GetArticle(t *testing.T) {
 			name: "Failure:: Datasource Error",
 			setup: func() datasource.DataSourceI {
 				mockDs := mock.NewMockDataSourceI(mockCtrl)
-				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return(nil, 0, errors.New(""))
+				mockDs.EXPECT().Get(map[string]interface{}{"id": "1"}, 1, 0).Times(1).Return(nil, errors.New(""))
 				return mockDs
 			},
 			want: &model.Response{
@@ -200,7 +200,7 @@ func TestArticleManagementLogic_GetAllArticle(t *testing.T) {
 					Content: "content",
 					Author:  "author",
 				}
-				mockDs.EXPECT().Get(map[string]interface{}{}, 5, 0).Times(1).Return([]model.ArticleDs{x, y}, 1, nil)
+				mockDs.EXPECT().Get(nil, 5, 0).Times(1).Return([]model.ArticleDs{x, y}, nil)
 				return mockDs
 			},
 			want: &model.Response{
@@ -224,7 +224,7 @@ func TestArticleManagementLogic_GetAllArticle(t *testing.T) {
 			name: "Failure:: Datasource Error",
 			setup: func() datasource.DataSourceI {
 				mockDs := mock.NewMockDataSourceI(mockCtrl)
-				mockDs.EXPECT().Get(map[string]interface{}{}, 5, 0).Times(1).Return(nil, 0, errors.New(""))
+				mockDs.EXPECT().Get(nil, 5, 0).Times(1).Return(nil, errors.New(""))
 				return mockDs
 			},
 			want: &model.Response{

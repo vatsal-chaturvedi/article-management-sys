@@ -34,20 +34,6 @@ func (m *MockCacherI) EXPECT() *MockCacherIMockRecorder {
 	return m.recorder
 }
 
-// Delete mocks base method.
-func (m *MockCacherI) Delete(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Delete indicates an expected call of Delete.
-func (mr *MockCacherIMockRecorder) Delete(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockCacherI)(nil).Delete), arg0)
-}
-
 // Get mocks base method.
 func (m *MockCacherI) Get(arg0 string) ([]byte, error) {
 	m.ctrl.T.Helper()
@@ -61,21 +47,6 @@ func (m *MockCacherI) Get(arg0 string) ([]byte, error) {
 func (mr *MockCacherIMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockCacherI)(nil).Get), arg0)
-}
-
-// Health mocks base method.
-func (m *MockCacherI) Health() (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Health")
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Health indicates an expected call of Health.
-func (mr *MockCacherIMockRecorder) Health() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Health", reflect.TypeOf((*MockCacherI)(nil).Health))
 }
 
 // Set mocks base method.

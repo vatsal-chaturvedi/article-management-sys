@@ -6,9 +6,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/vatsal-chaturvedi/article-management-sys/internal/model"
 	"io/ioutil"
-	"log"
 	"reflect"
 	"time"
 )
@@ -78,46 +76,13 @@ func LoadFromJson(filepath string, cfg interface{}) error {
 	}
 	return nil
 }
-func ConnectSql(cfg DbCfg, tableName string) *sql.DB {
-	// Construct the database connection string from the configuration data.
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8mb4&parseTime=True", cfg.User, cfg.Pass, cfg.Host, cfg.Port)
-
-	// Open the database connection.
+func ConnectSql(cfg DbCfg) *sql.DB {
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True", cfg.User, cfg.Pass, cfg.Host, cfg.Port, cfg.DbName)
 	db, err := sql.Open(cfg.Driver, connectionString)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// Create the database schema if it does not already exist.
-	dbString := fmt.Sprintf("CREATE SCHEMA IF NOT EXISTS %s ;", cfg.DbName)
-	prepare, err := db.Prepare(dbString)
-	if err != nil {
-		panic(err.Error())
-	}
-	_, err = prepare.Exec()
-	if err != nil {
-		panic(err.Error())
-	}
-
-	// Close the database connection.
-	db.Close()
-
-	// Reopen the database connection with the specified database name.
-	connectionString = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True", cfg.User, cfg.Pass, cfg.Host, cfg.Port, cfg.DbName)
-	db, err = sql.Open(cfg.Driver, connectionString)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	// Create the specified table if it does not already exist.
-	x := fmt.Sprintf("create table if not exists %s", tableName)
-	log.Print(x + model.Schema)
-	_, err = db.Exec(x + model.Schema)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	// Return the database connection object.
 	return db
 }
 func ConnectRedis(c CacheConfig) *redis.Client {
@@ -134,7 +99,7 @@ func ConnectRedis(c CacheConfig) *redis.Client {
 }
 
 func InitSvcConfig(cfg Config) *SvcConfig {
-	dataBase := ConnectSql(cfg.DataBase, cfg.DataBase.TableName)
+	dataBase := ConnectSql(cfg.DataBase)
 	cache := ConnectRedis(cfg.Cacher)
 	duration, err := time.ParseDuration(cfg.Cacher.KeyExpiry)
 	if err != nil {

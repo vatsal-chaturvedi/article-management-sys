@@ -237,12 +237,12 @@ func Test_ArticleManagement_InsertArticle(t *testing.T) {
 				var response model.Response
 				err = json.Unmarshal(b, &response)
 				tempResp := &model.Response{
-					Status:  http.StatusInternalServerError,
+					Status:  http.StatusBadRequest,
 					Message: codes.GetErr(codes.ErrReadingReqBody),
 					Data:    nil,
 				}
-				if !reflect.DeepEqual(recorder.Code, http.StatusInternalServerError) {
-					t.Errorf("Want: %v, Got: %v", http.StatusInternalServerError, recorder.Code)
+				if !reflect.DeepEqual(recorder.Code, http.StatusBadRequest) {
+					t.Errorf("Want: %v, Got: %v", http.StatusBadRequest, recorder.Code)
 				}
 				if !reflect.DeepEqual(&response, tempResp) {
 					t.Errorf("Want: %v, Got: %v", tempResp, &response)
@@ -268,12 +268,12 @@ func Test_ArticleManagement_InsertArticle(t *testing.T) {
 				var response model.Response
 				err = json.Unmarshal(b, &response)
 				tempResp := &model.Response{
-					Status:  http.StatusInternalServerError,
+					Status:  http.StatusBadRequest,
 					Message: codes.GetErr(codes.ErrUnmarshall),
 					Data:    nil,
 				}
-				if !reflect.DeepEqual(recorder.Code, http.StatusInternalServerError) {
-					t.Errorf("Want: %v, Got: %v", http.StatusInternalServerError, recorder.Code)
+				if !reflect.DeepEqual(recorder.Code, http.StatusBadRequest) {
+					t.Errorf("Want: %v, Got: %v", http.StatusBadRequest, recorder.Code)
 				}
 				if !reflect.DeepEqual(&response, tempResp) {
 					t.Errorf("Want: %v, Got: %v", tempResp, &response)
@@ -291,7 +291,7 @@ func Test_ArticleManagement_InsertArticle(t *testing.T) {
 	}
 }
 
-func Test_blog_GetArticleById(t *testing.T) {
+func Test_ArticleManagement_GetArticleById(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -381,7 +381,7 @@ func Test_blog_GetArticleById(t *testing.T) {
 	}
 }
 
-func Test_blog_GetAllArticle(t *testing.T) {
+func Test_ArticleManagement_GetAllArticle(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -394,7 +394,7 @@ func Test_blog_GetAllArticle(t *testing.T) {
 			name: "Success",
 			setup: func() (ArticleManagementHandlerI, *http.Request) {
 				mockLogic := mock.NewMockArticleManagementLogicI(mockCtrl)
-				mockLogic.EXPECT().GetAllArticle(10, 1).
+				mockLogic.EXPECT().GetAllArticle(20, 1).
 					Return(&model.Response{
 						Status:  http.StatusOK,
 						Message: "Success",

@@ -51,7 +51,7 @@ func (l ArticleManagementLogic) InsertArticle(req *model.Article) *model.Respons
 }
 
 func (l ArticleManagementLogic) GetArticle(id string) *model.Response {
-	article, _, err := l.DsSvc.Get(map[string]interface{}{"id": id}, 1, 0)
+	article, err := l.DsSvc.Get(map[string]interface{}{"id": id}, 1, 0)
 	if err != nil {
 		log.Print(codes.GetErr(codes.ErrDataSource), err)
 		return &model.Response{
@@ -77,7 +77,7 @@ func (l ArticleManagementLogic) GetArticle(id string) *model.Response {
 
 func (l ArticleManagementLogic) GetAllArticle(limit int, page int) *model.Response {
 	offset := (page - 1) * limit
-	articles, _, err := l.DsSvc.Get(map[string]interface{}{}, limit, offset)
+	articles, err := l.DsSvc.Get(nil, limit, offset)
 	if err != nil {
 		log.Print(codes.GetErr(codes.ErrDataSource), err)
 		return &model.Response{

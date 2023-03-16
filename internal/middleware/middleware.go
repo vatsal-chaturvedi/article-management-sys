@@ -53,9 +53,9 @@ func (t Middleware) Cacher(next http.Handler) http.Handler {
 			if err != nil {
 				log.Print(err)
 				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusBadRequest)
+				w.WriteHeader(http.StatusInternalServerError)
 				_ = json.NewEncoder(w).Encode(&model.Response{
-					Status:  http.StatusBadRequest,
+					Status:  http.StatusInternalServerError,
 					Message: codes.GetErr(codes.ErrUnmarshall),
 					Data:    nil,
 				})

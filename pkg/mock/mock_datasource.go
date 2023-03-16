@@ -35,33 +35,18 @@ func (m *MockDataSourceI) EXPECT() *MockDataSourceIMockRecorder {
 }
 
 // Get mocks base method.
-func (m *MockDataSourceI) Get(arg0 map[string]interface{}, arg1, arg2 int) ([]model.ArticleDs, int, error) {
+func (m *MockDataSourceI) Get(arg0 map[string]interface{}, arg1, arg2 int) ([]model.ArticleDs, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0, arg1, arg2)
 	ret0, _ := ret[0].([]model.ArticleDs)
-	ret1, _ := ret[1].(int)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockDataSourceIMockRecorder) Get(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockDataSourceI)(nil).Get), arg0, arg1, arg2)
-}
-
-// HealthCheck mocks base method.
-func (m *MockDataSourceI) HealthCheck() bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HealthCheck")
-	ret0, _ := ret[0].(bool)
-	return ret0
-}
-
-// HealthCheck indicates an expected call of HealthCheck.
-func (mr *MockDataSourceIMockRecorder) HealthCheck() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HealthCheck", reflect.TypeOf((*MockDataSourceI)(nil).HealthCheck))
 }
 
 // Insert mocks base method.

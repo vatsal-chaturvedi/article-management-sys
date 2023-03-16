@@ -13,6 +13,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 //go:generate mockgen --build_flags=--mod=mod --destination=./../../pkg/mock/mock_handler.go --package=mock github.com/vatsal-chaturvedi/article-management-sys/internal/handler ArticleManagementHandlerI
@@ -61,9 +62,9 @@ func (svc articleManagement) InsertArticle(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		log.Print(err)
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(&model.Response{
-			Status:  http.StatusInternalServerError,
+			Status:  http.StatusBadRequest,
 			Message: codes.GetErr(codes.ErrReadingReqBody),
 			Data:    nil,
 		})
@@ -74,14 +75,19 @@ func (svc articleManagement) InsertArticle(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		log.Print(err)
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
 		_ = json.NewEncoder(w).Encode(&model.Response{
-			Status:  http.StatusInternalServerError,
+			Status:  http.StatusBadRequest,
 			Message: codes.GetErr(codes.ErrUnmarshall),
 			Data:    nil,
 		})
 		return
 	}
+	//removed blank spaces
+	article.Title = strings.Trim(article.Title, " ")
+	article.Author = strings.Trim(article.Author, " ")
+	article.Content = strings.Trim(article.Content, " ")
+
 	validate := validator.New()
 	if err := validate.Struct(article); err != nil {
 		log.Print(err)
@@ -131,12 +137,12 @@ func (svc articleManagement) GetAllArticle(w http.ResponseWriter, r *http.Reques
 	queryParams := r.URL.Query()
 	limit, err := strconv.Atoi(queryParams.Get("limit"))
 	if err != nil || limit == 0 {
-		log.Print(fmt.Sprintf("setting default limit as %d as error: %+v, query: %s", 100, err, queryParams.Get("limit")))
-		limit = 10
+		log.Print(fmt.Sprintf("setting default limit as %d", 20))
+		limit = 20
 	}
 	page, err := strconv.Atoi(queryParams.Get("page"))
 	if err != nil || page == 1 {
-		log.Print(fmt.Sprintf("setting default page as %d as error: %+v, query: %s", 1, err, queryParams.Get("page")))
+		log.Print(fmt.Sprintf("setting default page as %d", 1))
 		page = 1
 	}
 	resp := svc.logic.GetAllArticle(limit, page)

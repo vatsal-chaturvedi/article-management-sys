@@ -4,18 +4,38 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c5f6e4c-8553-40a4-9cad-c6ccb01e99b4" name="Changes" comment="Added middleware for caching the responses">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/init.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
+    <list default="true" id="2c5f6e4c-8553-40a4-9cad-c6ccb01e99b4" name="Changes" comment="Updated README.md, config.json and added postman collection">
+      <change afterPath="$PROJECT_DIR$/internal/codes/codes_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handler/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handler/handler_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler/handler_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/logic/logic.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/logic/logic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/logic/logic_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/logic/logic_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/middleware/middleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middleware/middleware.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/middleware/middleware_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/middleware/middleware_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repo/cacher/redis.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo/cacher/redis.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repo/cacher/redis_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo/cacher/redis_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repo/datasource/interface.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo/datasource/interface.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repo/datasource/sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo/datasource/sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repo/datasource/sql_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo/datasource/sql_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/mock/mock_cacher.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/mock/mock_cacher.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/mock/mock_datasource.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/mock/mock_datasource.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/go/go1.18.5" />
   <component name="Git.Settings">
@@ -32,6 +52,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
@@ -57,8 +78,8 @@
       <recent name="C:\Program Files\work\article-management-sys" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware">
-    <configuration name="TestArticleManagementLogic_GetArticle in github.com/vatsal-chaturvedi/article-management-sys/internal/logic" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestLoadFromJson in github.com/vatsal-chaturvedi/article-management-sys/internal/config">
+    <configuration name="TestArticleManagementLogic_GetAllArticle/Failure::_Datasource_Error in github.com/vatsal-chaturvedi/article-management-sys/internal/logic" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="article-management-sys" />
       <working_directory value="$PROJECT_DIR$/internal/logic" />
       <root_directory value="$PROJECT_DIR$" />
@@ -67,7 +88,30 @@
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestArticleManagementLogic_GetArticle\E$" />
+      <pattern value="^\QTestArticleManagementLogic_GetAllArticle\E$/^\QFailure::_Datasource_Error\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestLoadFromJson in github.com/vatsal-chaturvedi/article-management-sys/internal/config" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/config" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/config" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestLoadFromJson\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/config" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="article-management-sys" />
+      <working_directory value="$PROJECT_DIR$/internal/config" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/config" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -92,35 +136,13 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
-    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="article-management-sys" />
-      <working_directory value="$PROJECT_DIR$/internal/middleware" />
-      <root_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/middleware" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go test github.com/vatsal-chaturvedi/article-management-sys/internal/router" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="article-management-sys" />
-      <working_directory value="$PROJECT_DIR$/internal/router" />
-      <root_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="github.com/vatsal-chaturvedi/article-management-sys/internal/router" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware" />
-        <item itemvalue="Go Test.TestArticleManagementLogic_GetArticle in github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
-        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/router" />
-        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+        <item itemvalue="Go Test.TestLoadFromJson in github.com/vatsal-chaturvedi/article-management-sys/internal/config" />
         <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler" />
+        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+        <item itemvalue="Go Test.TestArticleManagementLogic_GetAllArticle/Failure::_Datasource_Error in github.com/vatsal-chaturvedi/article-management-sys/internal/logic" />
+        <item itemvalue="Go Test.go test github.com/vatsal-chaturvedi/article-management-sys/internal/config" />
       </list>
     </recent_temporary>
   </component>
@@ -147,18 +169,23 @@
     <MESSAGE value="Added  get article by id endpoint and its test cases" />
     <MESSAGE value="Added  get all article endpoint and its test cases" />
     <MESSAGE value="Added middleware for caching the responses" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added middleware for caching the responses" />
+    <MESSAGE value="Added Docker, docker compose and start.sh" />
+    <MESSAGE value="Updated README.md" />
+    <MESSAGE value="Updated README.md, config.json and added postman collection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md, config.json and added postman collection" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_handler.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler Coverage Results" MODIFIED="1678866852616" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_middleware.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware Coverage Results" MODIFIED="1678872599130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_config.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/config Coverage Results" MODIFIED="1678863190085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_handler.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/handler Coverage Results" MODIFIED="1678944790403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$TestSqlDs_Get_in_github_com_vatsal_chaturvedi_article_management_sys_internal_repo_datasource.out" NAME="TestSqlDs_Get in github.com/vatsal-chaturvedi/article-management-sys/internal/repo/datasource Coverage Results" MODIFIED="1678941166283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_middleware.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/middleware Coverage Results" MODIFIED="1678944138335" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_config.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/config Coverage Results" MODIFIED="1678944272118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_repo_datasource.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/repo/datasource Coverage Results" MODIFIED="1678863107989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_router.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/router Coverage Results" MODIFIED="1678867521465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$TestLoadFromJson_in_github_com_vatsal_chaturvedi_article_management_sys_internal_config.out" NAME="TestLoadFromJson in github.com/vatsal-chaturvedi/article-management-sys/internal/config Coverage Results" MODIFIED="1678944896055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_repo_cacher.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/repo/cacher Coverage Results" MODIFIED="1678863081911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_logic.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic Coverage Results" MODIFIED="1678867074876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Article_Management_Sys$go_test_github_com_vatsal_chaturvedi_article_management_sys_internal_logic.out" NAME="go test github.com/vatsal-chaturvedi/article-management-sys/internal/logic Coverage Results" MODIFIED="1678944774946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -1,7 +1,6 @@
 package config
 
 import (
-	"errors"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/golang/mock/gomock"
 	"reflect"
@@ -69,28 +68,6 @@ func TestInitSvcConfig(t *testing.T) {
 			name: "Failure::DB Open 1",
 			args: func() args {
 				return args{cfg: Config{DataBase: DbCfg{Driver: "", DbName: "newTemp"}}}
-			},
-		},
-		{
-			name: "Failure::DB Prepare",
-			args: func() args {
-				mock1.ExpectPrepare("CREATE SCHEMA IF NOT EXISTS newTemp ;").WillReturnError(errors.New("error "))
-				return args{cfg: Config{DataBase: DbCfg{Driver: "sqlmock", DbName: "newTemp"}}}
-			},
-		},
-		{
-			name: "Failure:DB Exec",
-			args: func() args {
-				mock1.ExpectPrepare("CREATE SCHEMA IF NOT EXISTS newTemp ;").ExpectExec().WillReturnError(errors.New("error")).WillReturnResult(sqlmock.NewResult(1, 1))
-				return args{cfg: Config{DataBase: DbCfg{Driver: "sqlmock", DbName: "newTemp"}}}
-			},
-		},
-		{
-			name: "Failure:: Exec err 2",
-			args: func() args {
-				mock1.ExpectPrepare("CREATE SCHEMA IF NOT EXISTS newTemp ;").ExpectExec().WillReturnError(nil).WillReturnResult(sqlmock.NewResult(1, 1))
-				mock2.ExpectExec(regexp.QuoteMeta("create table if not exists ( id VARCHAR(255) NOT NULL PRIMARY KEY, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL, content VARCHAR(255) NOT NULL );")).WillReturnError(errors.New("error exec")).WillReturnResult(sqlmock.NewResult(1, 1))
-				return args{cfg: Config{DataBase: DbCfg{Driver: "sqlmock", DbName: "newTemp"}}}
 			},
 		},
 	}

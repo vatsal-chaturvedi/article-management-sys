@@ -11,8 +11,6 @@ import (
 type CacherI interface {
 	Get(string) ([]byte, error)
 	Set(string, interface{}, time.Duration) error
-	Health() (string, error)
-	Delete(string) error
 }
 type cache struct {
 	rdb *redis.Client
@@ -37,11 +35,4 @@ func (c cache) Set(key string, value interface{}, expiry time.Duration) error {
 		return err
 	}
 	return nil
-}
-func (c cache) Health() (string, error) {
-	status := c.rdb.Ping(context.Background())
-	return status.Result()
-}
-func (c cache) Delete(key string) error {
-	return c.rdb.Del(context.Background(), key).Err()
 }
